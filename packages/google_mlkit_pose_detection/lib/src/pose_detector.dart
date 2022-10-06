@@ -51,15 +51,20 @@ class PoseDetectorOptions {
   /// The mode for the pose detector.
   final PoseDetectionMode mode;
 
+  /// Specifies whether to use CPU or CPU and GPU for detection (currently works only for Android)
+  final PoseDetectionHardwareConfig hardwareConfig;
+
   /// Constructor to create an instance of [PoseDetectorOptions].
   PoseDetectorOptions(
       {this.model = PoseDetectionModel.base,
-      this.mode = PoseDetectionMode.stream});
+      this.mode = PoseDetectionMode.stream,
+      this.hardwareConfig = PoseDetectionHardwareConfig.cpu});
 
   /// Returns a json representation of an instance of [PoseDetectorOptions].
   Map<String, dynamic> toJson() => {
         'model': model.name,
         'mode': mode.name,
+        'hardwareConfig': hardwareConfig.name
       };
 }
 
@@ -79,6 +84,14 @@ enum PoseDetectionMode {
 
   /// To process a stream of images. This mode is designed for streaming frames from video or camera.
   stream,
+}
+
+enum PoseDetectionHardwareConfig {
+  /// Hardware configuration that uses CPU only
+  cpu,
+
+  /// Hardware configuration that uses both CPU and GPU
+  cpuGpu
 }
 
 /// Available pose landmarks detected by [PoseDetector].
